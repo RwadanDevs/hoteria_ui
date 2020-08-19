@@ -1,2 +1,1 @@
-# hoteria_ui
-the UI
+# Hoteria UI
