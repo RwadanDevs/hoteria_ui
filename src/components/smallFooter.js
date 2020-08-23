@@ -16,7 +16,7 @@ return(
         }}
         >
                 <Typography variant="subtitle1">
-                    Copyright © irfiacre 2020
+                    Copyright © Hotel Name 2020
                 </Typography>
         </div>
 )};

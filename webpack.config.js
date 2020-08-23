@@ -11,7 +11,7 @@ var SRC_DIR = path.resolve(__dirname, 'src'); // Define the source directory
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: './public/index.html',
   filename: 'index.html',
-  favicon: "./src/assets/favicon.png",
+  // favicon: "./src/assets/favicon.png",
   inject: 'body',
 });
 /* Webpack configuration setup     
