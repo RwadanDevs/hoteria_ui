@@ -11,10 +11,10 @@ var SRC_DIR = path.resolve(__dirname, 'src'); // Define the source directory
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: './public/index.html',
   filename: 'index.html',
-  // favicon: "./src/assets/favicon.png",
+  favicon: "./src/assets/fav.png",
   inject: 'body',
 });
-/* Webpack configuration setup     
+/* Webpack configuration setup  
 */
 
 module.exports =(env)=> {
@@ -26,6 +26,7 @@ module.exports =(env)=> {
           filename: 'index.bundle.js',
           publicPath: '/',
         },
+        node: {fs: "empty"},
         module: {
           rules: [
             {
@@ -57,7 +58,7 @@ module.exports =(env)=> {
                 use: 'babel-loader',
               },
               {
-                test: /\.(png|jpeg|jpg|gif|svg)$/i,
+                test: /\.(png|jpeg|jpg|mp3|gif|svg)$/i,
                 use: [ 
                       'file-loader',
                       {
