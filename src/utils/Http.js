@@ -1,6 +1,5 @@
 const { 
-    BASE_LAN_URL,
-    // BASE_WEB_URL 
+    BASE_WEB_URL 
 } = process.env;
 
 export const reqHandler = (url,method,payload,action) => {
@@ -10,7 +9,7 @@ export const reqHandler = (url,method,payload,action) => {
         dispatch({ type : 'Loading',action : {}})
     
         if(payload === undefined){
-            res = fetch(`${BASE_LAN_URL}${url}`,{ 
+            res = fetch(`${BASE_WEB_URL}${url}`,{ 
                 method,
                 headers: {
                     Accepted:'appication/json',
@@ -19,7 +18,7 @@ export const reqHandler = (url,method,payload,action) => {
                     },
              })
         }else{
-            res = fetch(`${BASE_LAN_URL}${url}`,{
+            res = fetch(`${BASE_WEB_URL}${url}`,{
                 method,
                 headers: {
                     Accepted:'appication/json',
