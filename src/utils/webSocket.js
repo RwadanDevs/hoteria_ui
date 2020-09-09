@@ -21,12 +21,14 @@ const nextVariants = {
   }
 
 const Socket = ({ authInfo,AddOrder }) => {
-    const { REACT_APP_SOCKET } = process.env;
+
+    const { SOCKET_URL } = process.env;
+
     const [ message,setMessage ] = useState()
 
     const [ showToast, setShowToast ] = useState(false)
 
-    const socket = openSocket(REACT_APP_SOCKET);
+    const socket = openSocket(SOCKET_URL);
 
     socket.on('new_order',order =>{
         AddOrder(order);

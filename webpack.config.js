@@ -58,7 +58,7 @@ module.exports =(env)=> {
                 use: 'babel-loader',
               },
               {
-                test: /\.(png|jpeg|jpg|mp3|gif|svg)$/i,
+                test: /\.(png|jpeg|jpg|mp3|svg|gif)$/i,
                 use: [ 
                       'file-loader',
                       {

@@ -17,8 +17,8 @@ class Login extends Component{
         this.state = {
             origin_id:'',
             origin_type:'Table',
-            username:process.env.REACT_APP_GUEST_USERNAME,
-            password:process.env.REACT_APP_GUEST_PASSWORD,
+            username:process.env.GUEST_USERNAME,
+            password:process.env.GUEST_PASSWORD,
         }
     }
 
