@@ -2,7 +2,8 @@ const initState = {
     items:[],
     fetchError:null,
     cart:[],
-    inSession:false
+    inSession:false,
+    creationSuccess:false,
 }
 
 const itemReducer = (state = initState,action) => {
@@ -10,12 +11,30 @@ const itemReducer = (state = initState,action) => {
         state.cart = JSON.parse(sessionStorage.getItem("cart"));
         state.inSession = true;
     }
+
     const Action  = action.action;
     switch(action.type){
         case 'GetAllItems_Error':
             return state = {
                 ...state,
                 fetchError: Action,
+            }
+        case 'CreateItem_Error':
+            return state = {
+                ...state,
+                fetchError: Action,
+            }
+        case 'CreateItem_Success':
+            return state = {
+                ...state,
+                fetchError: null,
+                creationSuccess:true, 
+                items:[...state.items,action]
+            }
+        case 'DeleteItem_Success':
+            return state = {
+                ...state,
+                items: state.items.filter(item=> item.id !== Action )
             }
         case 'GetAllItems_Success':
             return state = {

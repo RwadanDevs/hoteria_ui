@@ -20,27 +20,40 @@ const nextVariants = {
     },
   }
 
-const Socket = ({ authInfo,AddOrder }) => {
+const { REACT_APP_SOCKET } = process.env;
 
-    const { SOCKET_URL } = process.env;
+const socket = openSocket(REACT_APP_SOCKET);
 
-    const [ message,setMessage ] = useState()
 
-    const [ showToast, setShowToast ] = useState(false)
+const Notify = ({ authInfo,AddOrder }) => {
+    
+    const [ message,setMessage ] = useState();
+    const [ socketId, setSocketId ] = useState();
+    const [ showToast, setShowToast ] = useState(false);
 
-    const socket = openSocket(SOCKET_URL);
+    socket.on('ping',(id)=>{
+
+        if(id !== undefined)
+        setSocketId(id);
+
+        if(authInfo.token !== null && socketId !== undefined)
+        socket.emit('auth',{ socketId: id, authInfo : authInfo.origin_id + ' ' + authInfo.origin_type})
+    })
 
     socket.on('new_order',order =>{
-        AddOrder(order);
-        setMessage(order);
-        setShowToast(true);
+            AddOrder(order);
+            setMessage(order);
+            setShowToast(true);
     })
 
     if (showToast&&authInfo.role !== 'GUEST'){
-        setTimeout(()=> setShowToast(false) ,5000)
+        setTimeout(()=> {
+            setShowToast(false)
+            setMessage();
+        } ,5000)
         return (
             <AnimatePresence>
-                    <audio src={ringtone} autoPlay></audio>
+                    <audio src={ringtone} autoPlay loop></audio>
                     <motion.div className="notification"
                         variants={nextVariants} 
                         initial="hidden"
@@ -48,11 +61,11 @@ const Socket = ({ authInfo,AddOrder }) => {
                         exit="exit"
                     >
                         <div>
-                            <i class="fas fa-utensils"></i>
+                            <i className="fas fa-utensils"></i>
                         </div>
                         <div>
                             <span>{message.origin_type} {message.origin_id}</span>
-                            <span>Placed A {message.total_cost} $ Order</span>
+                            <span>Placed a {message.total_cost} $ Order</span>
                         </div>
                     </motion.div>
             </AnimatePresence>
@@ -70,4 +83,4 @@ const mapDispatchToProps = (dispatch) => ({
     AddOrder: (order) => dispatch({type:'AddOrder',action:order})
 })
 
-export default connect(mapStateToProp,mapDispatchToProps)(Socket);
+export default connect(mapStateToProp,mapDispatchToProps)(Notify);

@@ -27,7 +27,9 @@ const cartNotification= {
   }
 }
 
+
 const Header = ({ logout,authInfo,tokenAuth,cart }) => {
+
   const token = localStorage.getItem('token');
   if(token!== null){
     if(authInfo.origin_type === null){
@@ -36,7 +38,11 @@ const Header = ({ logout,authInfo,tokenAuth,cart }) => {
     const { origin_type,origin_id,role } = authInfo; 
     
     return (
-      <nav>
+      <>
+        <div className="container ad">
+          Made with <i className=" red-text fas fa-heart"></i> <Link target="_blank" to="//github.com/kabundege">Christophe Kwizera</Link>
+        </div>
+        <nav>
           <motion.div className="logo"
             drag
             dragConstraints={{ left: 0, top: 0, right: 0, bottom: 0 }}
@@ -51,7 +57,7 @@ const Header = ({ logout,authInfo,tokenAuth,cart }) => {
           </motion.div>
           <motion.div className="title"
             initial={{ y: -250}}
-            animate={{ y: -10 }}
+            animate={{ x: -6,y:-10 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
           >
             { origin_type === null ? <Loader color="white"/> :  
@@ -65,7 +71,13 @@ const Header = ({ logout,authInfo,tokenAuth,cart }) => {
           transition={{ delay: 0.2, type: 'spring', stiffness: 120 }}
           >
             { 
-              role==='GUEST' && 
+              role==="Admin" ?
+                <li>
+                  <Link to='/users'>
+                    Add-User <i className="tiny fas fa-plus-circle"></i>
+                  </Link>
+                </li> :
+              role==='GUEST' ?
                 <li className="cart">
                   <Link to="/Cart">
                     <i className="fas fa-cart-plus"></i>
@@ -73,10 +85,15 @@ const Header = ({ logout,authInfo,tokenAuth,cart }) => {
                   <motion.i animate={cartNotification} className="cart-notification fas fa-dot-circle"></motion.i>
                   ) }
                   </Link>
+                </li> : 
+                <li>
+                  <NavLink to="/Create">
+                    New Item <i className="tiny fas fa-plus-circle"></i>
+                  </NavLink>
                 </li>
             }
             <li>
-              <NavLink to='/Dash'>Dashboard</NavLink>
+              <NavLink to='/Dash'>{ role === 'GUEST' ? 'Dashboard' : 'Items' }</NavLink>
             </li>
             <li>
               <NavLink to='/Orders'>Orders</NavLink>
@@ -91,11 +108,16 @@ const Header = ({ logout,authInfo,tokenAuth,cart }) => {
             </li>
           </motion.ul>
       </nav>
+      </>
     )
   }else{
-    return(
-      <></>
-    )
+    if(window.location.pathname !== '/'&& window.location.pathname !== '/admin'){
+      return window.location.assign('/')
+    }else{
+      return(
+        <></>
+      )
+    }
   }
   
 }

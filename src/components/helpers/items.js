@@ -1,9 +1,24 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { motion } from 'framer-motion';
 import Loader from "react-spinners/RotateLoader";
 import Rating from '../layout/rating';
 
-export default  ({ items,addToCart,role }) => {
+export default  ({ items,addToCart,role,deleteItem }) => {
+    const [ foodType, setFoodType ] = useState();
+    let data;
+    const values =  window.location.search.split("");
+    const newValue = values.splice(10);
+    const newFoodType = newValue.join("");
+
+    if(foodType !== newFoodType && newFoodType !== ""){
+        setFoodType(newFoodType);
+        data = items.filter(item => items.filter(item => item.food_type.includes(newFoodType)))
+    }else if(foodType){
+        data = items.filter(item => item.food_type.includes(foodType))
+    }else{
+        data = items
+    }
+
     const nextVariants = {
         hidden: { 
           x: '100vh' 
@@ -12,11 +27,11 @@ export default  ({ items,addToCart,role }) => {
           x: 0,
           transition: { type: 'spring', stiffness: 80 }
         },
-      }
+      };
       
-    if(items[0]){
-        return items.map(item=>(
-            <motion.div key={item.id} className="item"
+    if(data[0]){
+        return data.map(item=>(
+            <motion.div key={parseInt(item.id)} className="item"
                 variants={nextVariants} 
                 initial="hidden"
                 animate="visible"
@@ -33,8 +48,9 @@ export default  ({ items,addToCart,role }) => {
                     <div className="price">
                         <strong >{'$ '+item.price}</strong>
                         {
-                            role==='GUEST'&&
-                            <strong className="last" onClick={()=>addToCart(item.id)}><i className="fas fa-cart-plus" ></i></strong>
+                            role==='GUEST' ?
+                            <strong className="last" onClick={()=>addToCart(item.id)}><i className="fas fa-cart-plus" ></i></strong> :
+                            <strong className="last" onClick={()=>deleteItem(item.id)}><i className="tiny fas fa-trash"></i></strong>
                             
                         }
                     </div>
@@ -44,7 +60,7 @@ export default  ({ items,addToCart,role }) => {
     }else{
         return(
             <div className="loader">
-                    <Loader size={100} color={"orange"}/> 
+                    <Loader size={100} color={"pink"}/> 
             </div>
         )
     }

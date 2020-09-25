@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Items from '../helpers/items';
 import FoodTypes from '../layout/foodtypes';
 import '../../scss/components/geustDash.scss';
-import { getAllItems } from '../../store/actions/Actions';
+import { getAllItems,deleteItem } from '../../store/actions/Actions';
 import Title from '../helpers/dynamicTitle';
 
 class GuestHome extends Component{
@@ -11,7 +11,8 @@ class GuestHome extends Component{
         items:[],
         loading:true,
         foodType:'',
-        cart:[]
+        cart:[],
+        deleted:[]
     }
 
     componentDidMount(){
@@ -20,40 +21,30 @@ class GuestHome extends Component{
         }
 
         this.props.getItems();
-        Title();
     }
 
     componentDidUpdate(){
-        const { items } = this.props.items;
-        const { loading,foodType } = this.state;
+        Title();
+    }
 
-        if(loading&&items[0]){
+    handlerDelete = (id) =>{
+        if(window.confirm('Are You Sure')){
+            this.props.deleteItem(id);
             this.setState({
-                items:[...items],
-                loading:false,
+                loading:true,
+                deleted:id
             })
-        }
-
-        const values =  window.location.search.split("");
-        const newValue = values.splice(10);
-        const newFoodType = newValue.join("");
-
-        if(!loading && foodType !== newFoodType){
-                this.setState({
-                    items: items.filter(item => item.food_type.includes(newFoodType)),
-                    foodType: newFoodType
-                })
         }
     }
 
     render(){
-        const { items } = this.state;
+        const { items } = this.props.items;
         const { AddToCart,authInfo } = this.props;
         return(
             <>
                 <FoodTypes />
                 <div className="container parent">
-                    <Items items={items} addToCart={AddToCart} role={authInfo.role}/>
+                    <Items items={items} addToCart={AddToCart} role={authInfo.role} deleteItem={this.handlerDelete}/>
                 </div>
             </>
         )
@@ -67,7 +58,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
         getItems: () => dispatch(getAllItems()),
-        AddToCart: (data) => dispatch({ type:'AddToCart',action: data })
+        AddToCart: (data) => dispatch({ type:'AddToCart',action: data }),
+        deleteItem: (id) => dispatch(deleteItem(id))
 })
 
 

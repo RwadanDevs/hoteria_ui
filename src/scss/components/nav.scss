@@ -4,13 +4,15 @@ nav{
     display: flex;
     padding: 70px 20px;
     background: $headerWave no-repeat;
+    // background:pink;
     background-size: cover;
     height: 40vh;
     box-shadow: none;
     position: sticky;
     transition: 1s;
-    &:hover{
-        background-position: bottom;
+
+    @media screen and (max-width:1000px){
+        height: 40vh;
     }
 
     .title{
@@ -19,26 +21,17 @@ nav{
         font-size: 0.6em;
     }
     h5{
-        padding-bottom: 10px;
-        margin-top: 2%;
-        color: $baseRose*1.2;
+        color: $links;
         font-weight: bold;
-        &::before{
-            content: '⛏';
-        }
-        &::after{
-            content: '_______';
-            position: relative;
-            width: 100%;
-            @media (min-width:1500px) {
-                left: -8.0%;
-            }
-            @media (max-width:1000px) {
-                left: -20%;
-            }
-        }
+        font-family: 'Nixie One', cursive;
+        border-left: none;
+        padding: 22px 20px;
+        margin-top: -0%;
+        position: relative;
+        left: -1%;
     }
     .logo{
+        z-index: 1;
         img{
             width:80px;
             border-radius: 50%;
@@ -47,6 +40,7 @@ nav{
         }
     }
     ul{
+        font-family: 'Josefin Slab', serif;
         .cart{
             a{
                 position: absolute;
@@ -69,22 +63,23 @@ nav{
             }
         }
         .logout{
-            color: $baseRose;
+            color: $baseRose/1.5;
             font-weight: bold;
             cursor: pointer;
             transition: 1s;
             font-size: 18px;
+
             &:hover{
                 transform: rotate(360deg);
-                color: $baseBackgroung
+                color: $links
             }
         }
 
         li{
             margin: 0px 10px;
             a{
-                color: $baseBackgroung;
-                font-weight: bold;
+                color: $links;
+                font-weight: bolder;
                 transition: 0.5s;
                 &:hover{
                     color: $baseRose;

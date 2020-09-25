@@ -1,31 +1,78 @@
 @import'../settings/settings';
 
 .orders{
-    background: transparent;
+    .search{
+        input{
+            font-weight: bold;
+            color: rgb(99, 99, 99);
+        }
+        label{
+            margin-left: 98%;
+        }
+    }
+    .overlay{
+        background: lightgrey;
+        width: 20%;
+        position: fixed;
+        right: 4%;
+        text-align: center;
+        border-radius: 5px;
+        div{
+            display: flex;
+            padding: 5px 0px;
+            span{
+                flex: 0.5;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bolder;
+                font-family: cursive;
+                i{
+                    color: $baseRose;
+                }
+            }
+        }
+        ul{
+            li{
+                display: flex;
+                width: 90%;
+                margin: 5px auto;
+                span{
+                    flex: 0.5;
+                    padding: 10px 0 0 0;
+                    background: $baseBackgroung*3;
+                    img{
+                        width: 50%;
+                        border-radius: 5px;
+                    }
+                    &:last-child{
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+    }
     .order{
         margin: 1% auto ;
         padding: 10px 0px;
-        border-bottom: 1px solid $defaultText;
+        border-bottom: 2px solid rgb(248, 114, 137);
         border-radius: 10px;
         div{
             color: $defaultText;
-            background: white;
+            background: $links;
             width: 50%;
             margin: 2% auto;
             border-radius:5px;
-            @media (max-width:1200px) {
+            @media (max-width:1500px) {
                 width: 70%;
             }
             .viewer{
                 float: right;
-                background:$baseBackgroung;
                 padding: 3px 10px;
-                border: 1px solid $defaultText;
-                border-radius: 10px;
-                margin: -0.1% 2% 0 0;
+                margin: 0.3% 0% 0 0;
+                color: $baseRose;
                 cursor: pointer;
                 &:hover{
-                    color: $baseRose;
+                    color: $defaultText;
                 }
 
             }
@@ -56,28 +103,30 @@
                 }
             }
         }
+
         button{
             width: 30%;
             padding: 10px 0;
             font-size: 20px;
             margin: 2% 35%;
-            color:$defaultText;
+            color:$links;
             font-weight: bold;
-            border: none;
             border-radius: 5px;
             background: transparent;
             transition: 1s;
-            border: 0.5px solid $defaultText;
+            border: 1px solid $links;
             &:hover{
-                background: $defaultText;
-                color: $baseBackgroung;
+                i{
+                    transform: rotate(10deg);
+                }
             }
             i{
                 margin-left: 5%;
             }
             @media (max-width:1000px) {
-                margin: 0 50%;
+                margin: 0 35%;
             }
         }
+
     }
 }
