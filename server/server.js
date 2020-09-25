@@ -1,20 +1,20 @@
-const path = require('path');
-const express = require('express');
-const  dotenv =  require('dotenv');
+import path from 'path';
+import dotenv from 'dotenv';
+import express from 'express';
 
 dotenv.config();
 
-const publicPath = path.join(__dirname, '../', 'build');
+const publicPath = path.join(__dirname, '../', 'dist');
 const app = express();
 
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || 8000;
 
 app.use( express.static(publicPath) );
 
 app.get('*', (req,res)=>{
-    res.sendFile(path.join(publicPath, 'index.html'));
+    res.sendFile(path.resolve(publicPath, 'index.html'));
 });
 
 app.listen(PORT, ()=>{
-    console.log(`Server is running on ${ PORT }`);
-})
+    console.log(`App is running on server port: ${ PORT }`);
+});
