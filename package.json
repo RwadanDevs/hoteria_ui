@@ -11,8 +11,7 @@
     "start:dev": "npm run dev-server",
     "build:prod": "webpack -p --env production --content-base src/",
     "dev-server": "webpack -d && webpack-dev-server --content-base src/ --inline --hot",
-    "dev": "webpack --mode development --config webpack.config.js",
-    "test": "jest  --config=jest.config.json"
+    "dev": "webpack --mode development --config webpack.config.js"
   },
   "repository": {
     "type": "git",
